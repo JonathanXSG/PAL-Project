@@ -72,7 +72,7 @@ def p_CreateAsset(p):
     'expression : CREATEASSET PAREN_L IDENTIFIER COMMA IDENTIFIER PERIOD IDENTIFIER PAREN_R'
     if checkInit(p):
         pal.framesArray[pal.currentFrame].addAsset(pal.Asset(p[5] + p[6] + p[7], p[3]))
-        p[0] = 'Asset Created with name '
+        p[0] = 'Asset Created with name ' + p[3]
 
 
 def p_MoveAsset(p):
@@ -154,7 +154,7 @@ def p_CreateSprite(p):
     'expression : CREATESPRITE PAREN_L IDENTIFIER COMMA IDENTIFIER PERIOD IDENTIFIER COMMA NUMBER COMMA NUMBER PAREN_R'
     if checkInit(p):
         pal.framesArray[pal.currentFrame].addSprite(pal.Sprite(p[3], p[5] + p[6] + p[7], p[9], p[11]))
-        p[0] = 'Sprite Created with name ', p[3]
+        p[0] = 'Sprite Created with name ' + p[3]
 
 
 def p_ChangeSpriteState(p):
@@ -188,17 +188,6 @@ def p_MoveSprite(p):
                 p[0] = 'Sprite moved'
 
 
-def p_ResizeSpriteAbsolute(p):
-    'expression : IDENTIFIER RESIZESPRITE ABSOLUTE PAREN_L NUMBER COMMA NUMBER PAREN_R'
-    if checkInit(p):
-        sprite = pal.framesArray[pal.currentFrame].getSprite(p[1])
-        if sprite is None:
-            p[0] = 'Sprite cant be found'
-        else:
-            sprite.resizeAsset(p[5], p[7])
-            p[0] = 'Sprite resized'
-
-
 def p_ResizeSpriteMultiplier(p):
     'expression : IDENTIFIER RESIZESPRITE MULTIPLIER PAREN_L NUMBER PAREN_R'
     if checkInit(p):
@@ -206,7 +195,7 @@ def p_ResizeSpriteMultiplier(p):
         if sprite is None:
             p[0] = 'Sprite cant be found'
         else:
-            sprite.resizeAssetMultiplier(p[5])
+            sprite.resizeSpriteMultiplier(p[5])
             p[0] = 'Sprite resized'
 
 
@@ -247,6 +236,7 @@ def p_CreateAnimation(p):
     'expression : CREATEANIMATION PAREN_L NUMBER PAREN_R'
     if checkInit(p):
         pal.save(p[3])
+        p[0] = "Saved animation to file"
 
 
 # Error rule for syntax errors

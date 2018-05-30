@@ -200,9 +200,13 @@ class Asset:
         self.image = self.image.resize((multiplier * self.image.size[0],
                                         multiplier * self.image.size[1]),
                                        Image.ANTIALIAS)
+        self.centerX = self.image.size[0] // 2
+        self.centerY = self.image.size[1] // 2
 
     def resizeAsset(self, newSizeX, newSizeY):
         self.image = self.image.resize((newSizeX, newSizeY), Image.ANTIALIAS)
+        self.centerX = self.image.size[0] // 2
+        self.centerY = self.image.size[1] // 2
 
     def move(self, deltaX, deltaY):
         self.posX = self.posX + deltaX
